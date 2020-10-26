@@ -49,4 +49,8 @@ const courseSchema = new mongoose.Schema({
         sunday:Boolean
     }
 });
+const userSchema = new mongoose.Schema({
+   "username" : String,
+
+});
 module.exports = mongoose.model('Course', courseSchema)

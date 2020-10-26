@@ -1,5 +1,6 @@
+import {Course} from "./Course";
 
-class User {
+export class User {
     username: string;
     plans: Array<Plan>;
 
@@ -12,8 +13,17 @@ class User {
     }
 }
 
-class Plan {
+export class Plan {
+    name: string;
 
+    courseList : Array<Course>;
+    blockList : Array<Block>;
+}
+
+export class Block{
+    isWhitespace : boolean;
+    startTime: string;
+    endTime: string;
 }
 /*
 
