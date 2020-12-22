@@ -6,6 +6,7 @@ export class User {
 
     constructor(username:string) {
         this.username = username
+        this.plans = []
     }
 
     addPlan(plan){
@@ -25,6 +26,7 @@ export class Block{
     startTime: string;
     endTime: string;
 }
+
 /*
 
 

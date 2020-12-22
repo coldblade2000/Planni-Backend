@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
-const Course = require('../MongoDB/models/models')
+const {CourseModel} = require('../MongoDB/models/models.ts')
+const Course =  require('../model/Course.ts');
+const retrieveMultipleCourses = require('../model/model.ts').retrieveMultipleCourses
+
+
 mongoose.connect('mongodb://localhost:27017/banner', {useNewUrlParser: true, useUnifiedTopology: true});
 
 /* GET users listing. */
@@ -10,13 +14,18 @@ router.get('/', async function (req, res, next) {
         res.status(400)
         res.send("Can't access the full list of courses")
     } else {
-        const query = await Course.find(req.body).exec();
+        const query = await CourseModel.find(req.body).exec();
         console.log(query)
+
+        const courses  = await Model.retrieveMultipleCourses(query)
+        for (let course of courses)
+            console.log(course.toString())
+        res.json(query)
     }
-    const id = req.params.identifier
-    const query = await Course.find({"courseIdentifier": id}).exec()
+    /*const id = req.params.identifier
+    const query = await CourseModel.find({"courseIdentifier": id}).exec()
     console.log(query)
-    res.json(query);
+    res.json(query);*/
 });
 
 function isEmpty(obj) {

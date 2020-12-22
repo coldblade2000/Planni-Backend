@@ -1,4 +1,6 @@
-export interface Course{
+//import * as mongoose from 'mongoose'
+const mongoose = require('mongoose')
+ interface Course{
     "CRN": number; //40234
     "term": number; //202020
     "subjectShort": string; //BIOL
@@ -19,7 +21,7 @@ export interface Course{
     totalActiveDays: Days;
 }
 
-export class CourseClass implements Course{
+ class CourseClass implements Course{
     CRN: number;
     campusDescription: string;
     courseIdentifier: string;
@@ -28,16 +30,43 @@ export class CourseClass implements Course{
     credits: number;
     currentSeats: number;
     emptySeats: number;
-    faculty: Professor[];
     maximumSeats: number;
-    meetings: Meeting[];
     openSection: boolean;
     scheduleTypeDescription: string;
     sectionNumber: number;
     subjectLong: string;
     subjectShort: string;
     term: number;
+    faculty: Professor[];
+    meetings: Meeting[];
     totalActiveDays: Days;
+
+    constructor(doc) {
+    // constructor(doc: mongoose.Document ) {
+        this.CRN = doc["CRN"]
+        this.campusDescription = doc["campusDescription"]
+        this.courseIdentifier = doc["courseIdentifier"]
+        this.courseNumber = doc["courseNumber"]
+        this.courseTitle = doc["courseTitle"]
+        this.credits = doc["credits"]
+        this.currentSeats = doc["currentSeats"]
+        this.emptySeats = doc["emptySeats"]
+        this.maximumSeats = doc["maximumSeats"]
+        this.openSection = doc["openSection"]
+        this.scheduleTypeDescription = doc["scheduleTypeDescription"]
+        this.sectionNumber = doc["sectionNumber"]
+        this.subjectLong = doc["subjectLong"]
+        this.subjectShort = doc["subjectShort"]
+        this.term = doc["term"]
+        this.faculty = doc["faculty"]
+        this.meetings = doc["meetings"]
+        this.totalActiveDays = doc["totalActiveDays"]
+    }
+
+    toString ():string {
+        return `${this.CRN} - ${this.courseTitle} - ${this.courseIdentifier} - ${this.credits}`
+    }
+
 
     isDayActive (day: string){
         return this.totalActiveDays[day]
@@ -45,13 +74,13 @@ export class CourseClass implements Course{
 }
 
 
-export interface Professor{
+ interface Professor{
     bannerId: string,
     displayName:string,
     email:string,
     isPrimary:boolean
 }
-export interface Meeting {
+ interface Meeting {
     beginTime:string;
     endTime:string;
     building:string; //buildingDescription; Bloque C
@@ -60,7 +89,7 @@ export interface Meeting {
     endDate:string;
     activeDays : Days;
 }
-export interface Days{
+ interface Days{
     monday:boolean;
     tuesday:boolean;
     wednesday:boolean;
@@ -70,6 +99,9 @@ export interface Days{
     sunday:boolean;
 }
 
+module.exports = {
+    CourseClass: CourseClass
+}
 /*
 const courseSchema = new mongoose.Schema({
     "CRN": Number, //40234

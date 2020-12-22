@@ -53,4 +53,5 @@ const userSchema = new mongoose.Schema({
    "username" : String,
 
 });
-module.exports = mongoose.model('Course', courseSchema)
+
+module.exports.CourseModel = mongoose.model('Course', courseSchema)
