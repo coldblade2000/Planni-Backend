@@ -1,4 +1,4 @@
-import {Course} from "./Course";
+import {ICourse} from "../MongoDB/models/models";
 
 export class User {
     username: string;
@@ -17,7 +17,7 @@ export class User {
 export class Plan {
     name: string;
 
-    courseList : Array<Course>;
+    courseList : Array<ICourse>;
     blockList : Array<Block>;
 }
 

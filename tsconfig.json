@@ -2,9 +2,17 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "rootDir": "./",
+    "baseUrl": "./",
     "outDir": "./build",
-    "esModuleInterop": true,
-    "strict": true
-  }
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "incremental": true
+  },
+  "exclude": ["node_modules", "build"]
 }

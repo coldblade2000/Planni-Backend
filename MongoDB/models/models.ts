@@ -1,6 +1,9 @@
-const mongoose =  require("mongoose")
+import * as mongoose from 'mongoose'
+import {Schema, Document} from "mongoose";
+import {Days, Meeting, Professor} from "../../model/Course";
 
-const courseSchema = new mongoose.Schema({
+// const mongoose =  require("mongoose")
+const courseSchema : Schema = new Schema({
     "CRN": Number, //40234
     "term": Number, //202020
     "subjectShort": String, //BIOL
@@ -49,9 +52,30 @@ const courseSchema = new mongoose.Schema({
         sunday:Boolean
     }
 });
+
+export interface ICourse extends Document{
+    "CRN": number; //40234
+    "term": number; //202020
+    "subjectShort": string; //BIOL
+    "courseNumber": string; //1105 de ISIS-1105
+    "subjectLong": string; //BIOLOGIA
+    "sectionNumber": number;
+    "campusDescription": string; //VIRTUAL ; LABORATORIO
+    "scheduleTypeDescription": string; //TEORICA ; PROYECTO DE GRADO
+    "courseTitle": string; //ESTRUCTURAS DE DATOS
+    "maximumSeats": number; //50
+    "currentSeats": number; //0
+    "emptySeats": number; //50
+    "credits": number; //3; 2; 1
+    "openSection": boolean; //true
+    "courseIdentifier": string; //BIOL1105
+    faculty: Professor[];
+    meetings : Meeting[];
+    totalActiveDays: Days;
+}
+
 const userSchema = new mongoose.Schema({
    "username" : String,
 
 });
-
-module.exports.CourseModel = mongoose.model('Course', courseSchema)
+module.exports.CourseModel = mongoose.model<ICourse>('Course', courseSchema)
