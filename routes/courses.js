@@ -2,12 +2,11 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
 const {CourseModel} = require('../MongoDB/models/models.ts')
-const Course =  require('../model/Course.ts');
-const retrieveMultipleCourses = require('../model/model.ts').retrieveMultipleCourses
 
+const {Course} =  require('../model/Course.ts'); //<----ERROR HERE
+//const {retrieveMultipleCourses} = require('../model/model.ts')
 
 mongoose.connect('mongodb://localhost:27017/banner', {useNewUrlParser: true, useUnifiedTopology: true});
-
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
     if (isEmpty(req.body)) {

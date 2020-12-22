@@ -2,9 +2,12 @@
   "name": "server",
   "version": "0.0.0",
   "private": true,
+  "module": "CommonJS",
   "scripts": {
-    "start": "node ./bin/www && nodemon index.ts",
-    "build": "tsc --project ./"
+    "start": "node bin/www.js && nodemon app.js",
+    "build": "tsc --project ./",
+    "tsc": "tsc",
+    "dev": "nodemon —exec babel-node app.js"
   },
   "dependencies": {
     "@typegoose/typegoose": "^7.4.1",
@@ -16,11 +19,15 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "mongoose": "^5.10.4",
-    "morgan": "~1.9.1",
-    "nodemon": "^2.0.6",
-    "typescript": "^4.1.3"
+    "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.7.36"
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@types/mongoose": "^5.7.36",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   }
 }
