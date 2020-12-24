@@ -16,9 +16,7 @@ router.get('/', async function (req, res, next) {
         const query = await CourseModel.find(req.body).exec();
         console.log(query)
 
-        const courses  = await Model.retrieveMultipleCourses(query)
-        for (let course of courses)
-            console.log(course.toString())
+
         res.json(query)
     }
 

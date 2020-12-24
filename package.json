@@ -4,7 +4,7 @@
   "private": true,
   "module": "CommonJS",
   "scripts": {
-    "start": "tsc && node build/bin/www.js && nodemon app.js",
+    "start": "tsc && nodemon build/bin/www.js",
     "build": "tsc --project ./",
     "tsc": "tsc"
   },
@@ -16,9 +16,13 @@
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
     "mongoose": "^5.10.4",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1"
   },
   "devDependencies": {
     "@types/mongoose": "^5.7.36",
