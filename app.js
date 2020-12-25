@@ -1,5 +1,5 @@
 import {cookie_session} from "./secrets";
-import * as mongoose from "mongodb";
+import * as mongoose from "mongoose";
 
 const cors = require('cors')
 const createError = require('http-errors');
@@ -20,7 +20,7 @@ const {User} = require('./MongoDB/models/models')
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 console.log('Started server!')
 app.use(logger('dev'));
@@ -29,19 +29,9 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-try {
-    mongoose.connect('mongodb://localhost:27017/banner', {useNewUrlParser: true, useUnifiedTopology: true}).then(
-        () => {
-            console.log('Successful connection to mongodb!');
-        },
-        err => {
-            console.log(err)
-        }
-    );
-
-} catch (e) {
-    console.log('ERROR:Mongoose: ' + e)
-}
+mongoose.connect('mongodb://localhost:27017/banner', {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(_ => console.log('Connected Successfully to MongoDB'))
+    .catch(err => console.error(err));
 
 const sessionConfig = {
     secret: SESSION_SECRET,
@@ -64,18 +54,22 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
         clientID: GOOGLE.GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/redirect'
+        callbackURL: '/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
-        User.findOne({googleId: profile.id}).then((currentUser) => {
-            if (currentUser) {
-                done(null, currentUser)
-            } else {
-                new User({
-                    googleId: profile.id
-                }).save().then((newUser) => {
-                    done(null, newUser)
-                })
+        console.log("Got to verify")
+        User.findOne({googleId: profile.id})
+            .then((currentUser) => {
+                if (currentUser) {
+                    return done(null, currentUser)
+                } else {
+                    console.log(profile)
+                    new User({
+                        'email': profile.emails[0].value,
+                        'googleId': profile.id
+                    }).save().then((newUser) => {
+                        return done(null, newUser)
+                    })
             }
         })
     }))
@@ -108,7 +102,7 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('views/error');
+    res.render('error');
 });
 
 module.exports = app;

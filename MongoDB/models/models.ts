@@ -76,12 +76,14 @@ export interface ICourse extends Document{
 }
 
 export interface IUser extends Document {
-    "email": string
+    "email": string,
+    googleId: string
 }
 
 const userSchema = new mongoose.Schema({
     "email": {type: String, required: true, unique: true},
-    "planIDs": {type: Array, default: []}
+    "planIDs": {type: Array, default: []},
+    googleId: {type: String}
 
 });
 userSchema.plugin(passportLocalMongoose)
