@@ -81,6 +81,7 @@ export interface IUser extends Document {
 
 const userSchema = new mongoose.Schema({
     "email": {type: String, required: true, unique: true},
+    "planIDs": {type: Array, default: []}
 
 });
 userSchema.plugin(passportLocalMongoose)

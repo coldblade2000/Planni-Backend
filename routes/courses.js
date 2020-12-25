@@ -6,7 +6,7 @@ import * as Model from '../model/model'
 const {Course} =  require('../model/Course'); //<----ERROR HERE
 //const {retrieveMultipleCourses} = require('../model/model.ts')
 
-mongoose.connect('mongodb://localhost:27017/banner', {useNewUrlParser: true, useUnifiedTopology: true});
+
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
     if (isEmpty(req.body)) {
