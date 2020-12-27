@@ -4,13 +4,14 @@
   "private": true,
   "module": "CommonJS",
   "scripts": {
-    "start": "tsc && nodemon -- --trace-warnings build/bin/www.js ",
+    "start": "tsc  && node --trace-warnings build/bin/www.js ",
     "build": "tsc --project ./",
     "tsc": "tsc"
   },
   "dependencies": {
     "@typegoose/typegoose": "^7.4.1",
     "@types/node": "^14.14.1",
+    "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",

@@ -2,6 +2,7 @@ import {ICourse} from "../MongoDB/models/models";
 
 export class User {
     username: string;
+    realName: string;
     plans: Array<Plan>;
 
     constructor(username:string) {
