@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose'
-import *  as passportLocalMongoose from 'passport-local-mongoose'
 import {Schema, Document} from "mongoose";
 import {Days, Meeting, Professor} from "../../model/Course";
 
@@ -81,13 +80,13 @@ export interface IUser extends Document {
 }
 
 const userSchema = new mongoose.Schema({
+    "_id": String,
     "email": {type: String, required: true, unique: true},
-    "realName": {type:String, required: false, unique: false},
+    "realName": {type: String, required: false, unique: false},
     "planIDs": {type: Array, default: []},
     googleId: {type: String}
 
 });
-userSchema.plugin(passportLocalMongoose)
 module.exports.CourseModel = mongoose.model<ICourse>('Course', courseSchema)
 module.exports.User = mongoose.model<IUser>('User', userSchema)
 

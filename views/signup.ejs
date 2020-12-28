@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+
+
+<a onclick="askUsername(GOOGLE)"><img
+            src="https://coderwall-assets-0.s3.amazonaws.com/uploads/picture/file/4314/download.png"/></a></body>
+<script>
+    const GOOGLE = 1, MICROSOFT = 2
+
+    function askUsername(provider) {
+        const username = prompt("What is your uniandes username? (e.g. p.perezt2")
+        if (username && username.match("[a-zA-z]\.[a-zA-z]+\d*")) {
+            switch (provider) {
+                case GOOGLE:
+                    window.location.href = '/auth/google?username=' + username
+                    break;
+            }
+        }
+    }
+</script>
+</html>
