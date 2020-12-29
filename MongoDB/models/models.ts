@@ -87,6 +87,7 @@ const userSchema = new mongoose.Schema({
     googleId: {type: String}
 
 });
-module.exports.CourseModel = mongoose.model<ICourse>('Course', courseSchema)
-module.exports.User = mongoose.model<IUser>('User', userSchema)
+export const CourseModel: mongoose.Model<ICourse> = mongoose.model<ICourse>('Course', courseSchema)
+
+export const User: mongoose.Model<IUser> = mongoose.model<IUser>('User', userSchema)
 
