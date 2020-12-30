@@ -1,8 +1,9 @@
 import * as mongoose from "mongoose";
 // const mongoose = require('mongoose')
 
-const {CourseModel}  = require("../MongoDB/models/models");
-import {ICourse, IPlan, IPlanLight, Plan} from "../MongoDB/models/models"
+const {CourseModel} = require("../MongoDB/models/models");
+import {ICourse, IPlan, IPlanLight, Plan, User} from "../MongoDB/models/models"
+import {raw} from "body-parser";
 
 //mongoose.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -12,12 +13,29 @@ async function retrieveMultipleCourses(query: Object): Promise<Array<ICourse>> {
     return results;
 }
 
-export function retrieveOnePlan(planID: mongoose.Schema.Types.ObjectId) {
+export function retrieveOnePlan(planID: mongoose.Types.ObjectId) {
     return Plan.findById(planID).exec();
 }
 
-export function retrieveManyPlans(planIDs: Array<mongoose.Schema.Types.ObjectId>) {
+export async function addPlanToUser(name: string, owner: string) {
+    const plan = await new Plan({
+        name: name,
+        owner: owner
+    }).save()
+    const user = await User.findById(owner)
+    user.planIDs.push(plan._id)
+    return plan
+}
+
+export function retrieveManyPlans(planIDs: Array<mongoose.Types.ObjectId>) {
+    //const planIDs = convertStringIDs(rawplanIDs)
     return Plan.find().where('_id').in(planIDs)
+}
+
+export function convertStringIDs(rawIds: Array<string>): Array<mongoose.Types.ObjectId> {
+    const procPlanIDs: Array<mongoose.Types.ObjectId> = [];
+    rawIds.forEach((id) => procPlanIDs.push(mongoose.Types.ObjectId(id)))
+    return procPlanIDs;
 }
 
 export function checkPlanAuthorization(plan: IPlan, userID: string): boolean {
@@ -27,7 +45,7 @@ export function checkPlanAuthorization(plan: IPlan, userID: string): boolean {
 
 }
 
-export function updatePlan(planID: mongoose.Schema.Types.ObjectId, plan: IPlan) {
+export function updatePlan(planID: mongoose.Types.ObjectId, plan: IPlan) {
     return Plan.replaceOne({_id: planID}, plan)
 }
 

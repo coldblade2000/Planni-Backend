@@ -1,5 +1,12 @@
 import {Plan,} from "../MongoDB/models/models";
-import {checkPlanAuthorization, retrieveManyPlans, retrieveOnePlan, updatePlan} from "../model/model";
+import {
+    addPlanToUser,
+    checkPlanAuthorization,
+    convertStringIDs,
+    retrieveManyPlans,
+    retrieveOnePlan,
+    updatePlan
+} from "../model/model";
 import {Types} from 'mongoose'
 
 var express = require('express');
@@ -20,12 +27,13 @@ router.post('/', async function (req, res) {
             return res.status(409).send("ERROR 409: Plan name already exists for this user!")
         }
     }
-    new Plan({
-        name: req.body.name,
-        owner: req.user._id
-    }).save().then((plan) => {
+    addPlanToUser(req.body.name, req.user._id).then((plan) => {
         return res.status(201).send(plan)
     })
+    /*new Plan({
+        name: req.body.name,
+        owner: req.user._id
+    }).save()*/
 })
 
 router.get('/', async function (req, res) {
@@ -34,9 +42,11 @@ router.get('/', async function (req, res) {
      *     ids: [String]
      * }
      */
+    //TODO allow both [ids] and return user plans
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
-    if (!req.body) return res.status(400).send("ERROR 400 no request body found!")
-    const planIDs = req.user.planIDs
+    // if (!req.body) return res.status(400).send("ERROR 400 no request body found!")
+    const planIDs = (!!req.body) ? convertStringIDs(req.body.ids) : req.user.planIDs;
+    //const planIDs = req.user.planIDs
     const records = await retrieveManyPlans(planIDs).exec()
     if (!records) return res.status(404).send(`ERROR 404 Not found: No plans were found in the database, for the ID Array ${planIDs}`);
     for (let plan of records) {
@@ -50,7 +60,6 @@ router.get('/', async function (req, res) {
 
 router.get('/:id', async function (req, res) {
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
-    //TODO check if ObjectId parse was correct
     const plan = await retrieveOnePlan(Types.ObjectId(req.params.id))
     if (plan) {
         if (checkPlanAuthorization(plan, req.user._id)) {
