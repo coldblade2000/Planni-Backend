@@ -3,7 +3,6 @@ import * as mongoose from "mongoose";
 
 const {CourseModel} = require("../MongoDB/models/models");
 import {ICourse, IPlan, IPlanLight, Plan, User} from "../MongoDB/models/models"
-import {raw} from "body-parser";
 
 //mongoose.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -24,6 +23,7 @@ export async function addPlanToUser(name: string, owner: string) {
     }).save()
     const user = await User.findById(owner)
     user.planIDs.push(plan._id)
+    await user.save()
     return plan
 }
 
@@ -47,6 +47,11 @@ export function checkPlanAuthorization(plan: IPlan, userID: string): boolean {
 
 export function updatePlan(planID: mongoose.Types.ObjectId, plan: IPlan) {
     return Plan.replaceOne({_id: planID}, plan)
+}
+
+export function isObjEmpty(obj): boolean {
+    for (let x in obj) return false
+    return true
 }
 
 /*function createUser(user: User){

@@ -2,7 +2,7 @@ import {Plan,} from "../MongoDB/models/models";
 import {
     addPlanToUser,
     checkPlanAuthorization,
-    convertStringIDs,
+    convertStringIDs, isObjEmpty,
     retrieveManyPlans,
     retrieveOnePlan,
     updatePlan
@@ -30,10 +30,6 @@ router.post('/', async function (req, res) {
     addPlanToUser(req.body.name, req.user._id).then((plan) => {
         return res.status(201).send(plan)
     })
-    /*new Plan({
-        name: req.body.name,
-        owner: req.user._id
-    }).save()*/
 })
 
 router.get('/', async function (req, res) {
@@ -41,11 +37,14 @@ router.get('/', async function (req, res) {
      * {
      *     ids: [String]
      * }
+     * ObjectId("5feca60b5d001d493c1d2d17"),
+     ObjectId("5feca82a5d001d493c1d2d18"),
+     ObjectId("5feca82e5d001d493c1d2d19")
      */
     //TODO allow both [ids] and return user plans
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
     // if (!req.body) return res.status(400).send("ERROR 400 no request body found!")
-    const planIDs = (!!req.body) ? convertStringIDs(req.body.ids) : req.user.planIDs;
+    const planIDs = (!!req.body && !isObjEmpty(req.body)) ? convertStringIDs(req.body.ids) : req.user.planIDs;
     //const planIDs = req.user.planIDs
     const records = await retrieveManyPlans(planIDs).exec()
     if (!records) return res.status(404).send(`ERROR 404 Not found: No plans were found in the database, for the ID Array ${planIDs}`);
