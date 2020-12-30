@@ -1,21 +1,39 @@
-// import * as mongoose from "mongoose";
+import * as mongoose from "mongoose";
 // const mongoose = require('mongoose')
 
 const {CourseModel}  = require("../MongoDB/models/models");
-import {ICourse} from "../MongoDB/models/models"
-import {User, Block, Plan}  from "./ObjectFamily"
+import {ICourse, IPlan, IPlanLight, Plan} from "../MongoDB/models/models"
 
 //mongoose.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true});
 
-async function retrieveMultipleCourses(query: Object) : Promise<Array<ICourse>>{
+async function retrieveMultipleCourses(query: Object): Promise<Array<ICourse>> {
     let results;
     results = await CourseModel.find(query).exec();
     return results;
 }
 
-function createUser(user: User){
+export function retrieveOnePlan(planID: mongoose.Schema.Types.ObjectId) {
+    return Plan.findById(planID).exec();
+}
+
+export function retrieveManyPlans(planIDs: Array<mongoose.Schema.Types.ObjectId>) {
+    return Plan.find().where('_id').in(planIDs)
+}
+
+export function checkPlanAuthorization(plan: IPlan, userID: string): boolean {
+    if (!plan) return false;
+    if (plan.owner === userID) return true;
+    return !!plan.sharedusers.includes(userID);
 
 }
+
+export function updatePlan(planID: mongoose.Schema.Types.ObjectId, plan: IPlan) {
+    return Plan.replaceOne({_id: planID}, plan)
+}
+
+/*function createUser(user: User){
+
+}*/
 
 /*function convertRawCoursesToCourses (resultArray) :Array<ICourse>{
     const output: Array<ICourse> = [];

@@ -1,4 +1,4 @@
-import {cookie_session, SESSION_SECRET} from "./secrets";
+import {SESSION_SECRET} from "./secrets";
 import * as mongoose from "mongoose";
 
 const express = require('express');
@@ -10,11 +10,14 @@ const logger = require('morgan');
 const session = require("express-session");
 
 require('./model/auth')
+const passport = require('passport')
+
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
-const passport = require('passport')
+const planRouter = require('./routes/plan');
+
 const app = express();
 
 // view engine setup
@@ -54,6 +57,7 @@ app.use('/', indexRouter);
 app.use('/courses', coursesRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter)
+app.use('/plan', planRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,9 +1,10 @@
 import * as mongoose from 'mongoose'
-import {Schema, Document} from "mongoose";
+import {Document} from "mongoose";
 import {Days, Meeting, Professor} from "../../model/Course";
+import {Block} from "../../model/ObjectFamily";
 
 // const mongoose =  require("mongoose")
-const courseSchema : Schema = new Schema({
+const courseSchema: mongoose.Schema = new mongoose.Schema({
     "CRN": Number, //40234
     "term": Number, //202020
     "subjectShort": String, //BIOL
@@ -76,18 +77,53 @@ export interface ICourse extends Document{
 
 export interface IUser extends Document {
     "email": string,
-    googleId: string
+    googleId: string,
+    "planIDs": Array<mongoose.ObjectId>
 }
 
 const userSchema = new mongoose.Schema({
     "_id": String,
     "email": {type: String, required: true, unique: true},
     "realName": {type: String, required: false, unique: false},
-    "planIDs": {type: Array, default: []},
+    "planIDs": [{type: mongoose.Schema.Types.ObjectId, required: true, default: []}],
     googleId: {type: String}
 
 });
+
+export interface IPlanLight {
+    name: string;
+    owner: string;
+    sharedusers: Array<string>;
+    courseList: Array<ICourse>;
+    blockList: Array<Block>;
+}
+
+export interface IPlan extends Document {
+    name: string;
+    owner: string;
+    sharedusers: Array<string>;
+    courseList: Array<ICourse>;
+    blockList: Array<Block>;
+}
+
+const planSchema = new mongoose.Schema({
+    name: {type: String, required: true},
+    courseList: [{type: mongoose.Schema.Types.ObjectId, required: true, default: []}],
+    owner: {type: String, required: true},
+    sharedusers: [String],
+    blockList: [
+        {
+            type: new mongoose.Schema({
+                isWhitespace: Boolean,
+                startTime: String,
+                endTime: String
+            }),
+            default: []
+        }
+    ]
+})
 export const CourseModel: mongoose.Model<ICourse> = mongoose.model<ICourse>('Course', courseSchema)
 
 export const User: mongoose.Model<IUser> = mongoose.model<IUser>('User', userSchema)
+export const Plan: mongoose.Model<IPlan> = mongoose.model<IPlan>('Plan', planSchema)
 
