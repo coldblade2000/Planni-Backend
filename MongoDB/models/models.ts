@@ -5,6 +5,7 @@ import {Block} from "../../model/ObjectFamily";
 
 // const mongoose =  require("mongoose")
 const courseSchema: mongoose.Schema = new mongoose.Schema({
+    "_id": Number,
     "CRN": Number, //40234
     "term": Number, //202020
     "subjectShort": String, //BIOL
@@ -85,7 +86,7 @@ const userSchema = new mongoose.Schema({
     "_id": String,
     "email": {type: String, required: true, unique: true},
     "realName": {type: String, required: false, unique: false},
-    "planIDs": [{type: mongoose.Schema.Types.ObjectId, required: true, default: []}],
+    "planIDs": [{type: mongoose.Schema.Types.ObjectId, required: true, default: [], ref: 'Plan'}],
     googleId: {type: String}
 
 });
@@ -108,7 +109,7 @@ export interface IPlan extends Document {
 
 const planSchema = new mongoose.Schema({
     name: {type: String, required: true},
-    courseList: [{type: mongoose.Schema.Types.ObjectId, required: true, default: []}],
+    courseList: [{type: mongoose.Schema.Types.ObjectId, required: true, default: [], ref: 'Course'}],
     owner: {type: String, required: true},
     sharedusers: [String],
     blockList: [
