@@ -9,11 +9,12 @@ const {Course} =  require('../model/Course'); //<----ERROR HERE
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
-    if (isEmpty(req.body)) {
+    if (isEmpty(req.query)) {
         res.status(400)
         res.send("Can't access the full list of courses")
     } else {
-        const query = await CourseModel.find(req.body).exec();
+        console.log(req.query)
+        const query = await CourseModel.find(req.query).exec();
         console.log(query)
 
 

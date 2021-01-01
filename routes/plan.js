@@ -44,7 +44,8 @@ router.get('/', async function (req, res) {
     //TODO allow both [ids] and return user plans
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
     // if (!req.body) return res.status(400).send("ERROR 400 no request body found!")
-    const planIDs = (!!req.body && !isObjEmpty(req.body)) ? convertStringIDs(req.body.ids) : req.user.planIDs;
+    const array = JSON.parse(req.query.ids)
+    const planIDs = (!!array && !isObjEmpty(array)) ? convertStringIDs(array) : req.user.planIDs;
     //const planIDs = req.user.planIDs
     const records = await retrieveManyPlans(planIDs).exec()
     if (!records) return res.status(404).send(`ERROR 404 Not found: No plans were found in the database, for the ID Array ${planIDs}`);
