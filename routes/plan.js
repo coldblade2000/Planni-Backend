@@ -2,12 +2,14 @@ import {Plan,} from "../MongoDB/models/models";
 import {
     addPlanToUser,
     checkPlanAuthorization,
-    convertStringIDs, isObjEmpty,
+    convertStringIDs,
+    isObjEmpty,
     retrieveManyPlans,
     retrieveOnePlan,
     updatePlan
 } from "../model/model";
 import {Types} from 'mongoose'
+
 const passport = require('passport')
 
 var express = require('express');
@@ -42,10 +44,11 @@ router.get('/', passport.authenticate('jwt'), async function (req, res) {
      ObjectId("5feca82a5d001d493c1d2d18"),
      ObjectId("5feca82e5d001d493c1d2d19")
      */
-    //TODO allow both [ids] and return user plans
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
     // if (!req.body) return res.status(400).send("ERROR 400 no request body found!")
-    const array = JSON.parse(req.query.ids)
+    let array = null
+    if (req.query.ids) array = JSON.parse(req.query.ids)
+
     const planIDs = (!!array && !isObjEmpty(array)) ? convertStringIDs(array) : req.user.planIDs;
     //const planIDs = req.user.planIDs
     const records = await retrieveManyPlans(planIDs).exec()
