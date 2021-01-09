@@ -1,9 +1,9 @@
 import {User} from "../MongoDB/models/models";
-
+const passport = require('passport')
 var express = require('express');
 var router = express.Router();
 
-router.get('/:id', async function (req, res) {
+router.get('/:id', passport.authenticate('jwt'), async function (req, res) {
     if (req.user && req.params.id === req.user._id) {
         await User.findById(req.user._id).exec().then((user => {
             if (user) return res.status(200).send(user);
@@ -15,7 +15,7 @@ router.get('/:id', async function (req, res) {
     }
 })
 
-router.get('/', async function (req, res) {
+router.get('/', passport.authenticate('jwt'), async function (req, res) {
     if (req.user) {
         await User.findById(req.user._id).populate('planIDs').exec().then((user => {
             if (user) return res.status(200).send(user);

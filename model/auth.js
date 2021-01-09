@@ -1,7 +1,11 @@
+import {JWT_SECRET} from "../secrets";
+
 const passport = require("passport");
 const {GOOGLE} = require("../secrets");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const {User} = require('../MongoDB/models/models')
+const JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
 
 passport.use(new GoogleStrategy({
         passReqToCallback: true,
@@ -12,6 +16,7 @@ passport.use(new GoogleStrategy({
     (req, accessToken, refreshToken, profile, done) => {
         //console.log("found req in the auth part: ",req)
         //console.log("Got to verify. Profile: ", profile)
+        console.log("AccessToken: ", accessToken)
         User.findOne({googleId: profile.id})
             .then(async (currentUser) => {
                 if (currentUser) {
@@ -45,6 +50,23 @@ passport.use(new GoogleStrategy({
             })
     }))
 
+const jwtOtions = {
+    secretOrKey: JWT_SECRET,
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+}
+
+passport.use(new JwtStrategy(jwtOtions, (jwt_payload, done) => {
+    console.log("JWT Payload: ", jwt_payload)
+    User.findOne({_id: jwt_payload._id}, (err, user) => {
+        if (err) return done(err, false);
+        if (user) {
+            return done(null, user)
+        } else {
+            return done(null, false)
+        }
+
+    })
+}))
 
 passport.serializeUser((user, done) => {
     console.log("Serialize user: " + user)

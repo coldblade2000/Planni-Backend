@@ -1,6 +1,11 @@
+import {JWT_SECRET} from "../secrets";
+
 var express = require('express');
 var router = express.Router();
 const passport = require('passport')
+const jwt = require('jsonwebtoken')
+
+const SUCCESS_REDIRECT_URL = 'http://localhost:3000/'
 
 /* GET home page. */
 router.get('/google', [(req, res, next) => {
@@ -10,10 +15,16 @@ router.get('/google', [(req, res, next) => {
     scope: ['profile', 'email']
 })]);
 
-router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/'}),
+router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/', session: false}),
     (req, res) => {
-        //console.log('Successful login: ', req)
-        res.redirect('/auth/success')
+        console.log('Successful login: ', req.user)
+        const tokenizedObject = {
+            _id: req.user._id,
+            email: req.user.email
+        }
+        const token = jwt.sign(tokenizedObject, JWT_SECRET);
+        console.log(`AUTH: Redirecting with token: ${token}`)
+        res.redirect(`${SUCCESS_REDIRECT_URL}?token=${token}`)
     }
 );
 

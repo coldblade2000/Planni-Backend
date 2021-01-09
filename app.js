@@ -10,8 +10,8 @@ const logger = require('morgan');
 const session = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 
-require('./model/auth')
-const passport = require('passport')
+//require()
+const passport = require('./model/auth')
 
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
@@ -56,6 +56,7 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 //https://dev.to/phyllis_yym/beginner-s-guide-to-google-oauth-with-passport-js-2gh4
+
 
 app.use(passport.initialize());
 app.use(passport.session());
