@@ -8,11 +8,12 @@ import {
     updatePlan
 } from "../model/model";
 import {Types} from 'mongoose'
+const passport = require('passport')
 
 var express = require('express');
 var router = express.Router();
 
-router.post('/', async function (req, res) {
+router.post('/', passport.authenticate('jwt'), async function (req, res) {
     /**
      * {
      *     name: String
@@ -32,7 +33,7 @@ router.post('/', async function (req, res) {
     })
 })
 
-router.get('/', async function (req, res) {
+router.get('/', passport.authenticate('jwt'), async function (req, res) {
     /**
      * {
      *     ids: [String]
@@ -58,7 +59,7 @@ router.get('/', async function (req, res) {
     res.status(200).send(records)
 });
 
-router.get('/:id', async function (req, res) {
+router.get('/:id', passport.authenticate('jwt'), async function (req, res) {
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
     const plan = await retrieveOnePlan(Types.ObjectId(req.params.id))
     if (plan) {
@@ -72,7 +73,7 @@ router.get('/:id', async function (req, res) {
     }
 });
 
-router.put('/:id', async function (req, res) {
+router.put('/:id', passport.authenticate('jwt'), async function (req, res) {
     /**
      * body = replacement plan object
      */
@@ -93,7 +94,7 @@ router.put('/:id', async function (req, res) {
     }
 });
 
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', passport.authenticate('jwt'), async function (req, res) {
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
     const plan = await retrieveOnePlan(Types.ObjectId(req.params.id))
     if (plan) {
