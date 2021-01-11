@@ -8,14 +8,17 @@ const jwt = require('jsonwebtoken')
 const SUCCESS_REDIRECT_URL = 'http://localhost:3000/'
 
 /* GET home page. */
-router.get('/google', [(req, res, next) => {
+router.get('/google', [async (req, res, next) => {
     req.session.desiredusername = req.query.username;
     next()
 }, passport.authenticate('google', {
     scope: ['profile', 'email']
 })]);
 
-router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/', session: false}),
+router.get('/google/callback', passport.authenticate('google', {
+        failureRedirect: '/auth/login?status=error',
+        session: false
+    }),
     (req, res) => {
         console.log('Successful login: ', req.user)
         const tokenizedObject = {
@@ -36,8 +39,9 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+    const status = req.query.status || null
     //console.log("/auth/  user: ", req.user)
-    res.render('login', {title: 'Login', user: req.user})
+    res.render('login', {title: 'Login/Register', user: req.user, status})
 });
 
 router.get('/signup', (req, res) => {

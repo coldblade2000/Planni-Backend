@@ -1,8 +1,8 @@
 import * as mongoose from "mongoose";
+import {ICourse, IPlan, Plan, User} from "../MongoDB/models/models"
 // const mongoose = require('mongoose')
 
 const {CourseModel} = require("../MongoDB/models/models");
-import {ICourse, IPlan, IPlanLight, Plan, User} from "../MongoDB/models/models"
 
 //mongoose.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -10,6 +10,10 @@ async function retrieveMultipleCourses(query: Object): Promise<Array<ICourse>> {
     let results;
     results = await CourseModel.find(query).exec();
     return results;
+}
+
+export const findUserByID = async (id) => {
+    return User.findById(id).exec();
 }
 
 export function retrieveOnePlan(planID: mongoose.Types.ObjectId) {

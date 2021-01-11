@@ -1,0 +1,47 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.d-flex {
+    display: flex;
+}
+
+a {
+    color: #00B7FF;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: #eaeaea;
+}
+
+.container {
+    background: azure;
+    padding: 16px;
+    flex-direction: column;
+    align-items: center;
+    min-width: 300px;
+    min-height: 300px;
+
+}
+
+#formUsername {
+    flex-direction: column;
+}
+
+#formUsername > * {
+    margin-bottom: 8px;
+}
+
+.correctText {
+    background: rgba(128, 238, 128, 0.7);
+}
+
+.wrongText {
+    background: rgba(238, 128, 128, 0.7);
+}

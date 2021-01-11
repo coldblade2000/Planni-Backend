@@ -16,7 +16,7 @@ passport.use(new GoogleStrategy({
     (req, accessToken, refreshToken, profile, done) => {
         //console.log("found req in the auth part: ",req)
         //console.log("Got to verify. Profile: ", profile)
-        console.log("AccessToken: ", accessToken)
+        //console.log("AccessToken: ", accessToken)
         User.findOne({googleId: profile.id})
             .then(async (currentUser) => {
                 if (currentUser) {

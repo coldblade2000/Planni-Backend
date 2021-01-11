@@ -3,16 +3,14 @@ import * as mongoose from "mongoose";
 
 const express = require('express');
 const path = require('path');
+const session = require("express-session");
 const cors = require('cors')
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 
-//require()
 const passport = require('./model/auth')
-
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const authRouter = require('./routes/auth');
@@ -22,11 +20,11 @@ const planRouter = require('./routes/plan');
 const app = express();
 
 // view engine setup
+app.use(express.static(path.join(__dirname, '../public')));
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 console.log('Started server!')
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 app.use(express.urlencoded({extended: false}));
@@ -60,9 +58,9 @@ app.use(session(sessionConfig))
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 app.use(cors());
+
+
 app.use('/', indexRouter);
 app.use('/courses', coursesRouter);
 app.use('/auth', authRouter);
@@ -70,6 +68,7 @@ app.use('/user', userRouter)
 app.use('/plan', planRouter)
 
 // catch 404 and forward to error handler
+
 app.use(function (req, res, next) {
     next(createError(404));
 });
@@ -84,5 +83,6 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
 
 module.exports = app;

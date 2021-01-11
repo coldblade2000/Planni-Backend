@@ -2,12 +2,47 @@
 <html>
 <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/login.css' type="text/css"/>
 </head>
 <body>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<p>User: <%= user %></p>
-<a href="/auth/google"><img src="https://coderwall-assets-0.s3.amazonaws.com/uploads/picture/file/4314/download.png"/>
-</a></body>
+<div class="container d-flex">
+    <h1><%= title %></h1>
+    <% if (status && status === 'error'){ %>
+        <div class="wrongText">
+            <p>
+                ERROR: Account doesn't exist or the google account already has an account associated
+            </p>
+        </div>
+    <% } %>
+    <!--            <p>User: <%= user || "Not logged in" %></p>-->
+    <p>If you wish to <strong>register</strong>, please fill in your uniandes username below, otherwise leave blank:</p>
+    <form id="formUsername" class="d-flex" action="/auth/google" method="get">
+        <label for="username"> Desired Username</label>
+        <input type="text" id="username" name="username" placeholder="p.perezf12">
+        <a href="javascript:{}" onclick="document.getElementById('formUsername').submit()"><img
+                    src="https://coderwall-assets-0.s3.amazonaws.com/uploads/picture/file/4314/download.png"/>
+        </a>
+    </form>
+</div>
+<script>
+    const GOOGLE = 1, MICROSOFT = 2
+
+    function checkusername() {
+        const username = document.getElementById("username").value
+        if (username && username.match("[a-zA-z]\.[a-zA-z]+\d*")) {
+            document.getElementById("username").classList.add("correctText")
+            document.getElementById("username").classList.remove("wrongText")
+
+        } else {
+            document.getElementById("username").classList.add("wrongText")
+            document.getElementById("username").classList.remove("correctText")
+
+        }
+    }
+
+    document.getElementById('username').addEventListener('input', checkusername)
+</script>
+</body>
+
+
 </html>
