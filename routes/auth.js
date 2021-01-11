@@ -1,11 +1,11 @@
 import {JWT_SECRET} from "../secrets";
+import {SUCCESS_REDIRECT_URL} from "../constants";
 
 var express = require('express');
 var router = express.Router();
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 
-const SUCCESS_REDIRECT_URL = 'http://localhost:3000/'
 
 /* GET home page. */
 router.get('/google', [async (req, res, next) => {

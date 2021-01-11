@@ -13,3 +13,7 @@ export const GOOGLE = {
     GOOGLE_CLIENT_ID: 'AAAAAAAAAAAAA-BBBBBBBBBBBBBBBBBB.apps.googleusercontent.com',
     GOOGLE_CLIENT_SECRET: 'IUHO99Nibnfiopjhhjf90whfw39'
 }
+
+export const LOGIN_INFO = 'user:pass@'
+
+export const JWT_SECRET = 'cAAAAAAAAAAAAAAAAAAAAAAAAAAAA0'

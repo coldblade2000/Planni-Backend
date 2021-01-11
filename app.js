@@ -1,5 +1,6 @@
-import {SESSION_SECRET} from "./secrets";
+import {LOGIN_INFO, SESSION_SECRET} from "./secrets";
 import * as mongoose from "mongoose";
+import {MONGODB_ADDRESS} from "./constants";
 
 const express = require('express');
 const path = require('path');
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-mongoose.connect('mongodb://localhost:27017/banner', {
+mongoose.connect(`mongodb://${LOGIN_INFO}${MONGODB_ADDRESS}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
