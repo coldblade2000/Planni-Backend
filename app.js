@@ -1,4 +1,4 @@
-import {LOGIN_INFO, SESSION_SECRET} from "./secrets";
+import {BACKEND_PASSWORD, LOGIN_INFO, SESSION_SECRET} from "./secrets";
 import * as mongoose from "mongoose";
 import {MONGODB_ADDRESS} from "./constants";
 
@@ -32,6 +32,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
 mongoose.connect(`mongodb://${LOGIN_INFO}${MONGODB_ADDRESS}`, {
+    user: 'backend',
+    password: BACKEND_PASSWORD,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
