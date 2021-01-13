@@ -27,6 +27,7 @@ passport.use(new GoogleStrategy({
                     delete req.session.desiredusername;
                     const founduser = await User.findById(username).exec()
                     if (founduser) {
+                        //TODO check if this errors out
                         if (founduser['_id'] === currentUser['_id']) {
                             return done(null, founduser)
                         } else {

@@ -3,7 +3,7 @@ import {ICourse, IPlan, Plan, User} from "../MongoDB/models/models"
 // const mongoose = require('mongoose')
 
 const {CourseModel} = require("../MongoDB/models/models");
-
+//TODO standardize when you use .exec() and when not
 //mongoose.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true});
 
 async function retrieveMultipleCourses(query: Object): Promise<Array<ICourse>> {
