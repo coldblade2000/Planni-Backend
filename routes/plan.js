@@ -82,7 +82,7 @@ router.put('/:id', passport.authenticate('jwt'), async function (req, res) {
      */
     if (!req.user) return res.status(401).send("ERROR 401 Not authorized: You're not logged in!")
     if (!req.body) return res.status(400).send("ERROR 400 no request body found!")
-    const originalPlan = await retrieveOnePlan(Types.ObjectId(req.params.id)).exec()
+    const originalPlan = await retrieveOnePlan(Types.ObjectId(req.params.id))
     const newPlan = req.body;
     if (originalPlan) {
         if (!originalPlan._id === newPlan._id) return res.status(400).send(`ERROR 400 Bad Request: Plan ID mismatch!`);

@@ -1,4 +1,4 @@
-import {BACKEND_PASSWORD, LOGIN_INFO, SESSION_SECRET} from "./secrets";
+import {BACKEND_PASSWORD, SESSION_SECRET} from "./secrets";
 import * as mongoose from "mongoose";
 import {MONGODB_ADDRESS} from "./constants";
 
