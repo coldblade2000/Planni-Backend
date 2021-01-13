@@ -103,13 +103,13 @@ export interface IPlan extends Document {
     name: string;
     owner: string;
     sharedusers: Array<string>;
-    courseList: Array<ICourse>;
-    blockList: Array<Block>;
+    courseList: Array<number>;
+    blockList: Array<mongoose.Schema.Types.ObjectId>;
 }
 
 const planSchema = new mongoose.Schema({
     name: {type: String, required: true},
-    courseList: [{type: mongoose.Schema.Types.ObjectId, required: true, default: [], ref: 'Course'}],
+    courseList: [{type: Number, required: true, default: [], ref: 'Course'}],
     owner: {type: String, required: true},
     sharedusers: [String],
     blockList: [
