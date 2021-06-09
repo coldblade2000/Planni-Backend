@@ -1,6 +1,6 @@
 {
-  "name": "server",
-  "version": "0.1.0",
+  "name": "planni-backend",
+  "version": "0.2.0",
   "private": true,
   "module": "CommonJS",
   "scripts": {
