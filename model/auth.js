@@ -57,7 +57,7 @@ const jwtOtions = {
 }
 
 passport.use(new JwtStrategy(jwtOtions, (jwt_payload, done) => {
-    console.log("JWT Payload: ", jwt_payload)
+    //console.log("JWT Payload: ", jwt_payload)
     User.findOne({_id: jwt_payload._id}, (err, user) => {
         if (err) return done(err, false);
         if (user) {
@@ -70,12 +70,12 @@ passport.use(new JwtStrategy(jwtOtions, (jwt_payload, done) => {
 }))
 
 passport.serializeUser((user, done) => {
-    console.log("Serialize user: " + user)
+    //console.log("Serialize user: " + user)
 
     done(null, user["_id"]);
 });
 passport.deserializeUser((id, done) => {
-    console.log("Deserialize ID: " + id)
+    //console.log("Deserialize ID: " + id)
     User.findById(id).then(user => {
         done(null, user);
     });

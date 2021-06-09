@@ -50,7 +50,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/success', (req, res) => {
-    console.log("/auth/  user: ", req.user)
+    //console.log("/auth/  user: ", req.user)
     res.redirect('/')
 });
 
