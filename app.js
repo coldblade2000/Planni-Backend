@@ -10,6 +10,7 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const MongoStore = require('connect-mongo')(session);
+const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const passport = require('./model/auth')
 const backIndexRouter = require('./routes/backindex');
@@ -65,6 +66,7 @@ app.use(passport.session());
 app.use(cors());
 
 app.use('/', indexRouter)
+app.use('/front/', createProxyMiddleware({target: `http://localhost:${process.env.PORT || 3000}/`}));
 app.use('/back/', backIndexRouter);
 app.use('/back/courses', coursesRouter);
 app.use('/back/auth', authRouter);
