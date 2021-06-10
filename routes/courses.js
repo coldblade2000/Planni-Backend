@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
 const {CourseModel} = require('../MongoDB/models/models')
-import * as Model from '../model/model'
 const {Course} =  require('../model/Course'); //<----ERROR HERE
 //const {retrieveMultipleCourses} = require('../model/model.ts')
 

@@ -1,4 +1,3 @@
-import * as mongoose from 'mongoose'
 import {ICourse} from "../MongoDB/models/models";
 
 

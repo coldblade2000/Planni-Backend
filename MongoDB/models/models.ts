@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import {Document} from "mongoose";
+import {Document} from 'mongoose'
 import {Days, Meeting, Professor} from "../../model/Course";
 import {Block} from "../../model/ObjectFamily";
 

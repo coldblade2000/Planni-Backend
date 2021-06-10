@@ -5,7 +5,7 @@
       <paths name="Planni-Backend">
         <serverdata>
           <mappings>
-            <mapping deploy="/root/Planni-Backend" local="$PROJECT_DIR$" web="" />
+            <mapping deploy="/Planni-Backend" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

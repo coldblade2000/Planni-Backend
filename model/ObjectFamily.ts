@@ -1,8 +1,3 @@
-import {ICourse} from "../MongoDB/models/models";
-
-
-
-
 export interface Block {
     isWhitespace: boolean;
     startTime: string;
