@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3b45c232-aa6b-484a-ad94-78e892a44350" name="Planni-Backend" url="http://planni.me">
+        <fileTransfer rootFolder="/root" accessType="SFTP" host="68.183.30.135" port="22" sshConfigId="f44857d0-dd32-4eb5-ab9c-a6228e58eee3" sshConfig="root@68.183.30.135:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

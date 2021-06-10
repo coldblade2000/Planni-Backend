@@ -16,7 +16,7 @@
     <% } %>
     <!--            <p>User: <%= user || "Not logged in" %></p>-->
     <p>If you wish to <strong>register</strong>, please fill in your uniandes username below, otherwise leave blank:</p>
-    <form id="formUsername" class="d-flex" action="/auth/google" method="get">
+    <form id="formUsername" class="d-flex" action="/back/auth/google" method="get">
         <label for="username"> Desired Username</label>
         <input type="text" id="username" name="username" placeholder="p.perezf12">
         <a href="javascript:{}" onclick="document.getElementById('formUsername').submit()"><img
