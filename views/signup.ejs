@@ -19,7 +19,7 @@
         if (username && username.match("[a-zA-z]\.[a-zA-z]+\d*")) {
             switch (provider) {
                 case GOOGLE:
-                    window.location.href = '/auth/google?username=' + username
+                    window.location.href = '/back/auth/google?username=' + username
                     break;
             }
         }
