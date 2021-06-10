@@ -4,7 +4,7 @@
   "private": true,
   "module": "CommonJS",
   "scripts": {
-    "start": "tsc  && node --trace-warnings build/bin/www.js ",
+    "start": "tsc  && nodemon --trace-warnings build/bin/www.js ",
     "build": "tsc --project ./",
     "tsc": "tsc"
   },

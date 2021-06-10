@@ -12,6 +12,7 @@ const logger = require('morgan');
 const MongoStore = require('connect-mongo')(session);
 
 const passport = require('./model/auth')
+const backIndexRouter = require('./routes/backindex');
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const authRouter = require('./routes/auth');
@@ -63,8 +64,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
 
-
-app.use('/', indexRouter);
+app.use('/', indexRouter)
+app.use('/back/', backIndexRouter);
 app.use('/back/courses', coursesRouter);
 app.use('/back/auth', authRouter);
 app.use('/back/user', userRouter)
