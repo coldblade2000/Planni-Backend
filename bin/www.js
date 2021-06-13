@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.BACK_PORT || '3001');
+var port = normalizePort(process.env.BACK_PORT || '80');
 app.set('port', port);
 
 /**
@@ -25,7 +25,10 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+const listener = server.listen(port, function () {
+    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+});
+
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -34,7 +37,7 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
