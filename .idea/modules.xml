@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/BannerServer.iml" filepath="$PROJECT_DIR$/.idea/BannerServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Planni-Backend.iml" filepath="$PROJECT_DIR$/.idea/Planni-Backend.iml" />
     </modules>
   </component>
 </project>

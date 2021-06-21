@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('server:server');
-var http = require('http');
-
+const app = require('../app');
+const debug = require('debug')('server:server');
+const https = require('https');
+const fs = require("fs");
 /**
  * Get port from environment and store in Express.
  */
@@ -19,7 +19,12 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer(
+    {
+        cert: fs.readFileSync('/etc/letsencrypt/live/planni.me/fullchain.pem'),
+        key: fs.readFileSync('/etc/letsencrypt/live/planni.me/privkey.pem'),
+    }
+    , app);
 
 /**
  * Listen on provided port, on all network interfaces.
