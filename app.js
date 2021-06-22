@@ -65,13 +65,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
 
-app.use('/', indexRouter)
-app.use('/front/', createProxyMiddleware({target: `http://localhost:${process.env.PORT || 3000}/`}));
-app.use('/back/', backIndexRouter);
-app.use('/back/courses', coursesRouter);
-app.use('/back/auth', authRouter);
-app.use('/back/user', userRouter)
-app.use('/back/plan', planRouter)
+
+app.use('/', backIndexRouter);
+app.use('/courses', coursesRouter);
+app.use('/auth', authRouter);
+app.use('/user', userRouter)
+app.use('/plan', planRouter)
 
 // catch 404 and forward to error handler
 
