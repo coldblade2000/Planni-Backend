@@ -1,4 +1,5 @@
 import {JWT_SECRET} from "../secrets";
+import {CALLBACK_URL} from "../constants";
 
 const passport = require("passport");
 const {GOOGLE} = require("../secrets");
@@ -11,12 +12,10 @@ passport.use(new GoogleStrategy({
         passReqToCallback: true,
         clientID: GOOGLE.GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/back/auth/google/callback'
+        callbackURL: `${CALLBACK_URL}/back/auth/google/callback`
     },
     (req, accessToken, refreshToken, profile, done) => {
-        //console.log("found req in the auth part: ",req)
-        //console.log("Got to verify. Profile: ", profile)
-        //console.log("AccessToken: ", accessToken)
+
         User.findOne({googleId: profile.id})
             .then(async (currentUser) => {
                 if (currentUser) {
