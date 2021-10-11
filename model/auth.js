@@ -11,7 +11,7 @@ passport.use(new GoogleStrategy({
         passReqToCallback: true,
         clientID: GOOGLE.GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/back/auth/google/callback'
+        callbackURL: 'https://planni.me/back/auth/google/callback'
     },
     (req, accessToken, refreshToken, profile, done) => {
         //console.log("found req in the auth part: ",req)
